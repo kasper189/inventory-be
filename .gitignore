@@ -84,4 +84,6 @@ ENV/
 # Spyder project settings
 .spyderproject
 
+
+.DS_Store
 .idea
