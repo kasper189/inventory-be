@@ -8,14 +8,14 @@ import model.keys as keys
 LOGGER = logging.getLogger()
 
 class Item(object):
-    """Db item for the inventory
+    """Db item for the inventory.
 
     Attributes:
         name (str): Human readable string describing the item.
         count (int): Number of items present in the inventory.
     """
     def __init__(self, name, count):
-        LOGGER.info("Creating item with name %s and name %d" % (name, count))
+        LOGGER.info("Creating item with name %s and name %d", name, count)
         self.item = DbItem(name=name, count=count)
 
     def store(self):
@@ -25,10 +25,10 @@ class Item(object):
 
 
 class DbItem(mongoengine.DynamicDocument):
-    """Internal db item
+    """Internal db item.
         An item is made up of:
-        - name as string
-        - count as integer
+        - name as string.
+        - count as integer.
     """
     meta = {'collection': 'inventory'}
     name = mongoengine.StringField(max_lenght=60)
@@ -36,12 +36,22 @@ class DbItem(mongoengine.DynamicDocument):
 
 
 class JsonItem(object):
+    """Json representation of inventory item.
+
+        Attributes:
+            item (obj): bson object read from db.
+    """
     def __init__(self, item):
         if keys.NAME_KEY in item and keys.COUNT_KEY in item:
             self.name = item[keys.NAME_KEY]
             self.count = item[keys.COUNT_KEY]
 
     def get_dictionary(self):
+        """Transforms an inventory item as bson to a dictionary.
+
+            Returns:
+                dict: the item as dictionary.
+        """
         payload = dict()
         payload[keys.NAME_KEY] = self.name
         payload[keys.COUNT_KEY] = self.count
