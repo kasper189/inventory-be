@@ -27,13 +27,12 @@ if __name__ == '__main__':
     handler.setFormatter(formatter)
     root.addHandler(handler)
 
-
     app.config['MONGODB_SETTINGS'] = {
-        'db': 'inventory',
-        'host': 'ds019654.mlab.com',
-        'port': 19654,
-        'username': 'invadmin',
-        'password': '>U[d63RYrc}IDAu'
+        'db': os.environ['DB_NAME'],
+        'host': os.environ['DB_HOSTNAME'],
+        'port': int(os.environ['DB_PORT']),
+        'username': os.environ['DB_USERNAME'],
+        'password': os.environ['DB_PASSWORD']
     }
 
     db = MongoEngine(app)
