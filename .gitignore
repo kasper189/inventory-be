@@ -87,3 +87,5 @@ ENV/
 
 .DS_Store
 .idea
+
+app_locale.py
