@@ -1,3 +1,5 @@
+# pylint: disable=invalid-name
+
 """Database model for item in inventory.
 """
 import logging
@@ -48,6 +50,13 @@ class JsonItem(object):
         if keys.NAME_KEY in item and keys.COUNT_KEY in item:
             self.name = item[keys.NAME_KEY]
             self.count = item[keys.COUNT_KEY]
+        print item.id
+
+        if keys.ID_KEY in item:
+            self.id = item["id"]
+            LOGGER.info("ID found: %s", self.id)
+        else:
+            LOGGER.info("ID not found")
 
     def get_dictionary(self):
         """Transforms an inventory item as bson to a dictionary.
@@ -56,6 +65,8 @@ class JsonItem(object):
                 dict: the item as dictionary.
         """
         payload = dict()
+        if hasattr(self, 'id'):
+            payload[keys.ID_KEY] = str(self.id)
         payload[keys.NAME_KEY] = self.name
         payload[keys.COUNT_KEY] = self.count
 
