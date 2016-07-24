@@ -3,6 +3,7 @@
 
 import model.item as model
 
+
 def build_inventory(bson_items):
     """Builds the inventory as dictionary element.
 

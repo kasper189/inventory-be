@@ -7,6 +7,7 @@ import model.keys as keys
 
 LOGGER = logging.getLogger()
 
+
 class Item(object):
     """Db item for the inventory.
 
@@ -71,8 +72,8 @@ class JsonItem(object):
     def get_count(self):
         """Getter method for count.
 
-                    Returns:
-                        str: the item count.
-                """
+            Returns:
+                str: the item count.
+        """
         return self.count
 
