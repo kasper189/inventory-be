@@ -15,13 +15,15 @@ class Item(object):
         count (int): Number of items present in the inventory.
     """
     def __init__(self, name, count):
-        LOGGER.info("Creating item with name %s and name %d", name, count)
+        LOGGER.info("Creating item with name %s and name %s", name, count)
         self.item = DbItem(name=name, count=count)
 
     def store(self):
-        """To do
+        """Stores the element into the DB creating a new one.
         """
-        pass
+        LOGGER.info("Ready to store item in db")
+        self.item.save()
+        LOGGER.info("Element successfully added")
 
 
 class DbItem(mongoengine.DynamicDocument):
@@ -57,3 +59,20 @@ class JsonItem(object):
         payload[keys.COUNT_KEY] = self.count
 
         return payload
+
+    def get_name(self):
+        """Getter method for name.
+
+            Returns:
+                str: the item name.
+        """
+        return self.name
+
+    def get_count(self):
+        """Getter method for count.
+
+                    Returns:
+                        str: the item count.
+                """
+        return self.count
+
