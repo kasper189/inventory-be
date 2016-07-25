@@ -109,3 +109,9 @@ class UpdatorItem(object):
         DbItem.objects(id=self.item_id).update_one(set__count=count)
         json_item = JsonItem(DbItem.objects(id=self.item_id).first())
         return json_item.get_dictionary()
+
+    def delete(self):
+        """Delete the item.
+        """
+        LOGGER.info("Deleting item %s", str(self.item_id))
+        DbItem.objects(id=self.item_id).delete()

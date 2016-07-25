@@ -73,3 +73,20 @@ class ItemManager(Resource):
             return updated_item.update(new_count)
         except exception.BadItemFormat as bad_format:
             return {"message": bad_format.get_error_message()}
+
+    def delete(self, item_id):
+        """Delete method for the inventory api.
+
+            Returns:
+                dict: success message.
+        """
+        LOGGER.debug("Delete Item received with id: %s", item_id)
+        deleted_item = item.UpdatorItem(item_id)
+        deleted_item.delete()
+        LOGGER.debug("Element deleted from DB")
+        return (
+            {
+                "item": item_id,
+                "status": "deleted"
+            }
+        )
