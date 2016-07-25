@@ -15,6 +15,7 @@ CORS(app)
 api = Api(app)
 
 api.add_resource(manager.InventoryManager, '/inventory')
+api.add_resource(manager.ItemManager, '/item/<item_id>')
 
 if __name__ == '__main__':
 

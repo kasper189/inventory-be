@@ -10,3 +10,11 @@ class BadItemFormat(Exception):
 
     def __init__(self, *args, **kwargs):
         Exception.__init__(self, *args, **kwargs)
+
+    def get_error_message(self):
+        """Gets the exception error message.
+
+            Returns:
+                str: the error message.
+        """
+        return self.args

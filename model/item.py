@@ -1,4 +1,5 @@
 # pylint: disable=invalid-name
+# pylint: disable=no-member
 
 """Database model for item in inventory.
 """
@@ -50,7 +51,6 @@ class JsonItem(object):
         if keys.NAME_KEY in item and keys.COUNT_KEY in item:
             self.name = item[keys.NAME_KEY]
             self.count = item[keys.COUNT_KEY]
-        print item.id
 
         if keys.ID_KEY in item:
             self.id = item["id"]
@@ -88,3 +88,24 @@ class JsonItem(object):
         """
         return self.count
 
+
+class UpdatorItem(object):
+    """Item used to update inventory item.
+
+        Attributes:
+            id (str): item id that has to be updated.
+        """
+    def __init__(self, item_id):
+        self.item_id = item_id
+
+    def update(self, count):
+        """Updates the item.
+
+            Returns:
+                item: the updated item.
+        """
+        LOGGER.info("Updating item %s with count %s",
+                    str(self.item_id), str(count))
+        DbItem.objects(id=self.item_id).update_one(set__count=count)
+        json_item = JsonItem(DbItem.objects(id=self.item_id).first())
+        return json_item.get_dictionary()

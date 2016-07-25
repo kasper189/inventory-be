@@ -11,6 +11,7 @@ import error.exception as exception
 import model.item as item
 import manipulation.inventory
 import api.post_parser as post_parser
+import api.put_parser as put_parser
 
 
 LOGGER = logging.getLogger()
@@ -51,5 +52,24 @@ class InventoryManager(Resource):
             return json_item.get_dictionary()
 
         except exception.BadItemFormat as bad_format:
-            print bad_format
-            return {"message": "error"}
+            return {"message": bad_format.get_error_message()}
+
+
+class ItemManager(Resource):
+    """Item manager to handle api resources.
+    """
+    def put(self, item_id):
+        """Put method for the inventory api.
+
+        Returns:
+            items (dict): newly added inventory item.
+        """
+        LOGGER.debug("Put item with id: %s", item_id)
+
+        parser = put_parser.PutParser()
+        try:
+            new_count = parser.parse()
+            updated_item = item.UpdatorItem(item_id)
+            return updated_item.update(new_count)
+        except exception.BadItemFormat as bad_format:
+            return {"message": bad_format.get_error_message()}
